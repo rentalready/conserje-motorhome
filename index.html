@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conserje Digital · Estacionamiento Corujão Motorhomes</title>
+  <link rel="manifest" href="manifest.json">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    :root {
+      --rr-navy: #0d1b2a;
+      --rr-blue: #1b3a4b;
+      --rr-cyan: #0077b6;
+      --rr-accent: #00b4d8;
+      --rr-bg: #f4f6f9;
+      --rr-text: #1c2d42;
+    }
+    body { background-color: var(--rr-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--rr-text); padding-bottom: 40px; margin: 0; }
+    
+    .card-custom {
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+      margin-bottom: 16px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .card-header-custom {
+      background: #fff;
+      border-bottom: 1px solid #edf2f7;
+      padding: 14px 18px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--rr-navy);
+    }
+    .card-body-custom { padding: 16px 18px; }
+    
+    .btn-action {
+      background-color: #25d366;
+      color: #fff;
+      border-radius: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: 0.2s;
+    }
+    .btn-action:hover { background-color: #1eb956; color: #fff; }
+    
+    /* Módulo Clima */
+    .weather-card {
+      background: linear-gradient(135deg, #0077b6 0%, #0096c7 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(0, 119, 182, 0.2);
+    }
+    .weather-temp { font-size: 2.2rem; font-weight: 800; line-height: 1; }
+
+    /* Selector de Idiomas */
+    .lang-btn {
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .lang-btn.active {
+      background: #fff;
+      color: var(--rr-navy);
+      border-color: #fff;
+    }
+
+    /* Destacados Operativos */
+    .rule-strict {
+      background-color: #fef2f2;
+      border-left: 4px solid #ef4444;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+    }
+    .rule-warn {
+      background-color: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+    }
+    .rule-ok {
+      background-color: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER INTEGRADO TRILINGÜE -->
+  <div class="text-center" style="background: #06222b; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25);">
+    
+    <div class="d-flex justify-content-between align-items-center px-3 pt-3" style="max-width: 440px; margin: 0 auto;">
+      <span class="badge bg-success bg-opacity-75" style="font-size: 0.72rem;">
+        <i class="bi bi-shield-check"></i> <span data-i18n="badge_node">Nodo Verificado</span>
+      </span>
+      <div class="d-flex gap-1">
+        <button onclick="setLanguage('es')" id="btn-es" class="lang-btn active">🇪🇸 ES</button>
+        <button onclick="setLanguage('pt')" id="btn-pt" class="lang-btn">🇧🇷 PT</button>
+        <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
+      </div>
+    </div>
+
+    <!-- Título de Bienvenida Vivo -->
+    <div class="pt-3 pb-1 px-3 text-white">
+      <h2 id="hero-title" class="h4 fw-bold mb-1" style="letter-spacing: 0.5px;">¡Bienvenido a Park & Stay Corujão! 🚐🌴</h2>
+      <p id="hero-sub" class="small text-white-50 mb-0">Estacionamiento Motorhomes · Lagoinha do Norte</p>
+    </div>
+
+    <!-- Imagen Maestra -->
+    <div style="max-width: 440px; margin: 0 auto; padding: 6px 12px 14px;">
+      <img src="conserje-bg.jpg" onerror="this.src='badsn.jpg'" alt="Conserje Digital Estacionamiento Corujão" style="width: 100%; height: auto; display: block; border-radius: 14px;">
+    </div>
+  </div>
+
+  <div class="container py-3" style="max-width: 540px;">
+
+    <!-- 1. WI-FI DEL PREDIO -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-wifi text-primary"></i> <span data-i18n="wifi_t">1. Conexión Wi-Fi del Predio</span>
+      </div>
+      <div class="card-body-custom">
+        <div class="bg-light p-3 rounded-3 text-center border">
+          <span class="text-muted d-block small mb-1" data-i18n="wifi_ssid_l">Red Wi-Fi:</span>
+          <h5 class="fw-bold text-primary mb-2">PontaNorte</h5>
+          <span class="text-muted d-block small mb-1" data-i18n="wifi_pass_l">Contraseña:</span>
+          <h5 id="wifiPassMH" class="fw-bold text-dark mb-3">Chimuelo*517</h5>
+          <button class="btn btn-sm btn-outline-primary px-3 rounded-pill" onclick="copyWifiMH()">
+            <i class="bi bi-clipboard"></i> <span data-i18n="wifi_btn">Copiar Contraseña</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. WIDGET DE CLIMA EN VIVO -->
+    <div class="weather-card">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div>
+          <span class="badge bg-white text-primary fw-bold" style="font-size: 0.72rem;">
+            <i class="bi bi-geo-alt-fill"></i> Praia da Lagoinha
+          </span>
+          <span class="small d-block text-white-50 mt-1" id="weather-condition" data-i18n="weather_loading">Cargando clima en vivo...</span>
+        </div>
+        <i class="bi bi-sun-fill fs-2" id="weather-icon"></i>
+      </div>
+      <div class="d-flex align-items-baseline gap-3 my-1">
+        <span class="weather-temp" id="weather-temp">26°C</span>
+        <span class="small text-white-50" id="weather-wind">Viento: 12 km/h</span>
+      </div>
+    </div>
+
+    <!-- 3. NORMAS DE CONVIVENCIA Y COMPORTAMIENTO (EXHAUSTIVO) -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-shield-exclamation text-danger"></i> <span data-i18n="rules_t">2. Normas de Convivencia y Convivencia Vecinal</span>
+      </div>
+      <div class="card-body-custom">
+        
+        <div class="rule-strict">
+          <strong data-i18n="r_quiet_t">🔇 Horario de Silencio Estricto (22:00 a 08:00 hs):</strong><br>
+          <span data-i18n="r_quiet_d">El predio de motorhomes colinda directamente con los Lofts del Residencial y viviendas familiares. Prohibido ruidos molestos, música con altavoces y generadores eléctricos durante este horario.</span>
+        </div>
+
+        <div class="rule-strict">
+          <strong data-i18n="r_water_drop_t">⛔ Prohibido Salir Chorreando Agua:</strong><br>
+          <span data-i18n="r_water_drop_d">Terminantemente prohibido retirarse del predio goteando o vaciando aguas grises por la entrada peatonal y vehicular. Verifique el sellado hermético de sus válvulas antes de mover el vehículo.</span>
+        </div>
+
+        <div class="rule-warn">
+          <strong data-i18n="r_speed_t">🐢 Velocidad de Circulación (5 km/h):</strong><br>
+          <span data-i18n="r_speed_d">Paso de hombre absoluto dentro de todo el estacionamiento. Prioridad absoluta al peatón, niños y familias de playa.</span>
+        </div>
+
+        <div class="rule-warn">
+          <strong data-i18n="r_trailer_t">🚗 Vehículos Traccionadores y Trailers:</strong><br>
+          <span data-i18n="r_trailer_d">En casas rodantes y trailers, el vehículo de tiro debe permanecer desenganchado y estacionado exclusivamente en el sector general de autos.</span>
+        </div>
+
+        <div class="rule-ok">
+          <strong data-i18n="r_awning_t">⛺ Toldos, Mesas y Asignación de Parcela:</strong><br>
+          <span data-i18n="r_awning_d">El despliegue de toldos, mesas y sillas debe mantenerse dentro del ancho asignado a su vehículo, sin obstruir el paso ni invadir parcelas linderas.</span>
+        </div>
+
+        <div class="rule-strict">
+          <strong data-i18n="r_nature_t">🌿 Entorno Silvestre y Protección de Fauna:</strong><br>
+          <span data-i18n="r_nature_d">Estamos al pie del morro y lindamos con el área protegida del río. Queda prohibido dejar bolsas de basura en el suelo durante la noche para evitar atraer animales silvestres. Depositar residuos en los cestos cerrados.</span>
+        </div>
+
+        <div class="rule-warn">
+          <strong data-i18n="r_pets_t">🐾 Mascotas (Pet Friendly Responsable):</strong><br>
+          <span data-i18n="r_pets_d">Permanecerán siempre con correa en áreas comunes. Es obligatorio e indispensable recoger sus deposiciones de inmediato (por ley ambiental de Santa Catarina).</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 4. MANUAL DE SERVICIOS TÉCNICOS OPERATIVOS -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-tools text-primary"></i> <span data-i18n="serv_t">3. Manual Técnico de Servicios</span>
+      </div>
+      <div class="card-body-custom">
+        
+        <div class="mb-3">
+          <h6 class="fw-bold small mb-1"><i class="bi bi-plug text-warning"></i> <span data-i18n="serv_elec_t">Electricidad 220V (10A)</span></h6>
+          <p class="small text-muted mb-0" data-i18n="serv_elec_d">Tomas individuales de 220V/10A. Para consumos especiales o mayores amperajes, avisar previamente a la administración para evitar saltos térmicos.</p>
+        </div>
+        <hr class="my-2">
+
+        <div class="mb-3">
+          <h6 class="fw-bold small mb-1"><i class="bi bi-droplet text-info"></i> <span data-i18n="serv_water_t">Carga de Agua Limpia</span></h6>
+          <p class="small text-muted mb-0" data-i18n="serv_water_d">Canilla para abastecimiento de tanques. No está permitida la conexión fija permanente debido a la fuerte presión de red del predio (riesgo de rotura de instalaciones internas).</p>
+        </div>
+        <hr class="my-2">
+
+        <div class="mb-3">
+          <h6 class="fw-bold small mb-1"><i class="bi bi-recycle text-secondary"></i> <span data-i18n="serv_waste_t">Vaciado de Efluentes (Grises y Negras)</span></h6>
+          <p class="small text-muted mb-0" data-i18n="serv_waste_d">El predio cuenta con un conducto lateral integrado con bocas estratégicas. Descarga mediante manguera y cassettes/potys autorizada en horario nocturno, fuera de la operación del estacionamiento de playa de autos.</p>
+        </div>
+        <hr class="my-2">
+
+        <div>
+          <h6 class="fw-bold small mb-1"><i class="bi bi-badge-wc text-primary"></i> <span data-i18n="serv_bath_t">Sanitarios y Duchas de Playa</span></h6>
+          <p class="small text-muted mb-0" data-i18n="serv_bath_d">Disponemos de duchas exteriores frías de playa. Los baños son de uso higiénico compartido; está prohibido utilizarlos como lavaderos de ropa o duchas personales.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 5. COMERCIOS & SERVICIOS DE ASISTENCIA RODANTERA -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-geo-alt text-primary"></i> <span data-i18n="guide_t">4. Guía de Servicios y Comercios de Confianza</span>
+      </div>
+      <div class="card-body-custom">
+        
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <h6 class="fw-bold small mb-0" data-i18n="mini_t">🥩 Minimercado & Carnicería Corujão</h6>
+            <span class="small text-muted" data-i18n="mini_d">Dentro del complejo: bebidas frías, hielo, carbón, leña y cortes para asado.</span>
+          </div>
+          <span class="badge bg-primary bg-opacity-10 text-primary border" data-i18n="badge_inside">Complejo</span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <h6 class="fw-bold small mb-0" data-i18n="rancho_t">🦐 Restaurante Rancho Do Pescador Lagoinha</h6>
+            <span class="small text-muted" data-i18n="rancho_d">A 1 minuto a pie en la playa. 🏆 Melhor Restaurante de Frutos do Mar de Floripa.</span>
+          </div>
+          <span class="badge bg-success bg-opacity-10 text-success border">1 min playa</span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <h6 class="fw-bold small mb-0" data-i18n="mech_t">🛠️ Talleres y Gomerías 24h</h6>
+            <span class="small text-muted" data-i18n="mech_d">Auxilio de neumáticos pesados y mecánica rápida en Ponta das Canas (a 1.5 km).</span>
+          </div>
+          <span class="badge bg-light text-dark border">1.5 km</span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h6 class="fw-bold small mb-0" data-i18n="bus_t">🚌 Movilidad al Centro</h6>
+            <span class="small text-muted" data-i18n="bus_d">Parada a 50 metros. Línea 1122 Executivo Praia Brava directo al centro.</span>
+          </div>
+          <span class="badge bg-light text-dark border">50 metros</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 6. PROTOCOLO DE SALIDA (CHECK-OUT) -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-check2-circle text-primary"></i> <span data-i18n="chk_t">5. Checklist de Salida (Hasta las 11:00 hs)</span>
+      </div>
+      <div class="card-body-custom">
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="k1">
+          <label class="form-check-label small" for="k1" data-i18n="k1">Desconectar cable 220V y guardar mangueras</label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="k2">
+          <label class="form-check-label small" for="k2" data-i18n="k2">Cerrar válvulas herméticas y verificar que no goteen tanques</label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="k3">
+          <label class="form-check-label small" for="k3" data-i18n="k3">Dejar la parcela totalmente limpia y sin residuos</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="k4">
+          <label class="form-check-label small" for="k4" data-i18n="k4">Liquidar saldo pendiente con la administración (Martín o Marcos)</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. CONTACTO DIRECTO CON ANFITRIONES -->
+    <div class="card card-custom p-3 text-center border-0 shadow-sm">
+      <span class="small text-muted mb-2 d-block" data-i18n="wa_prompt">¿Necesitás coordinar asistencia técnica o tu salida?</span>
+      <button onclick="abrirWhatsAppMH()" class="btn btn-action py-2 px-4">
+        <i class="bi bi-whatsapp"></i> <span data-i18n="wa_btn">Hablar con la Administración</span>
+      </button>
+      <span class="small text-muted d-block mt-2" style="font-size: 0.72rem;">
+        Atención in-situ: Martín, María, Juan Martín y Marcos
+      </span>
+    </div>
+
+    <!-- FOOTER INSTITUCIONAL -->
+    <div class="text-center mt-4">
+      <p class="text-muted mb-0" style="font-size: 0.75rem;">
+        Nodo Operativo Certificado por <strong>Rental Ready · Park & Stay</strong><br>
+        <em>Menos confusión. Más control.</em>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- DICCIONARIO TRILINGÜE & SCRIPTS -->
+  <script>
+    let currentLang = 'es';
+
+    const translations = {
+      es: {
+        badge_node: "Nodo Verificado Park & Stay",
+        hero_t: "¡Bienvenido a Park & Stay Corujão! 🚐🌴",
+        hero_s: "Estacionamiento Motorhomes · Lagoinha do Norte",
+        wifi_t: "1. Conexión Wi-Fi del Predio",
+        wifi_ssid_l: "Red Wi-Fi:",
+        wifi_pass_l: "Contraseña:",
+        wifi_btn: "Copiar Contraseña",
+        wifi_copied: "Contraseña copiada: ",
+        weather_loading: "Cargando clima...",
+        rules_t: "2. Normas de Convivencia y Vecindad",
+        r_quiet_t: "🔇 Horario de Silencio Estricto (22:00 a 08:00 hs):",
+        r_quiet_d: "El predio colinda con los Lofts del Residencial y familias. Prohibido ruidos molestos, altavoces y generadores.",
+        r_water_drop_t: "⛔ Prohibido Salir Chorreando Agua:",
+        r_water_drop_d: "Terminantemente prohibido retirarse del predio goteando o vaciando aguas grises por la entrada peatonal y vehicular.",
+        r_speed_t: "🐢 Velocidad de Circulación (5 km/h):",
+        r_speed_d: "Paso de hombre en todo el predio. Prioridad total a peatones y niños de playa.",
+        r_trailer_t: "🚗 Vehículos Traccionadores y Trailers:",
+        r_trailer_d: "En casas rodantes y trailers, el vehículo tractor debe permanecer desenganchado en el sector general de autos.",
+        r_awning_t: "⛺ Toldos, Mesas y Parcela:",
+        r_awning_d: "El despliegue debe mantenerse dentro del ancho asignado a su vehículo sin invadir parcelas vecinas.",
+        r_nature_t: "🌿 Entorno Silvestre y Protección de Fauna:",
+        r_nature_d: "Estamos al pie del morro y junto a la reserva del río. Prohibido dejar basura en el suelo de noche para no atraer animales silvestres.",
+        r_pets_t: "🐾 Mascotas (Pet Friendly Responsable):",
+        r_pets_d: "Siempre con correa en áreas comunes. Obligatorio recoger sus deposiciones de inmediato (ley ambiental de SC).",
+        serv_t: "3. Manual Técnico de Servicios",
+        serv_elec_t: "Electricidad 220V (10A)",
+        serv_elec_d: "Tomas individuales de 220V/10A. Para consumos especiales o mayores potencias, avisar a la administración.",
+        serv_water_t: "Carga de Agua Limpia",
+        serv_water_d: "Canilla para abastecimiento de tanques. No se permite conexión permanente directa por la alta presión de red.",
+        serv_waste_t: "Vaciado de Efluentes (Grises y Negras)",
+        serv_waste_d: "Conducto lateral integrado con bocas estratégicas. Descarga con manguera y potys en horario nocturno, fuera de la operación de autos de playa.",
+        serv_bath_t: "Sanitarios y Duchas de Playa",
+        serv_bath_d: "Duchas exteriores frías de playa. Los baños son de uso higiénico compartido; prohibido usarlos como lavaderos o duchas personales.",
+        guide_t: "4. Servicios y Comercios de Confianza",
+        mini_t: "🥩 Minimercado & Carnicería Corujão",
+        mini_d: "Dentro del complejo: bebidas frías, hielo, carbón, leña y cortes para asado.",
+        rancho_t: "🦐 Restaurante Rancho Do Pescador Lagoinha",
+        rancho_d: "A 1 minuto a pie en la playa. 🏆 Melhor Restaurante de Frutos do Mar de Floripa.",
+        mech_t: "🛠️ Talleres y Gomerías 24h",
+        mech_d: "Auxilio de neumáticos pesados y mecánica en Ponta das Canas (a 1.5 km).",
+        bus_t: "🚌 Movilidad al Centro",
+        bus_d: "Parada a 50 metros. Línea 1122 Executivo Praia Brava directo al centro.",
+        badge_inside: "Complejo",
+        chk_t: "5. Checklist de Salida (Hasta las 11:00 hs)",
+        k1: "Desconectar cable 220V y guardar mangueras",
+        k2: "Cerrar válvulas herméticas y verificar que no goteen tanques",
+        k3: "Dejar la parcela totalmente limpia y sin residuos",
+        k4: "Liquidar saldo pendiente con la administración (Martín o Marcos)",
+        wa_prompt: "¿Necesitás coordinar asistencia técnica o tu salida?",
+        wa_btn: "Hablar con la Administración",
+        wa_msg: "¡Hola! Me comunico desde el Conserje Digital de Park & Stay Corujão (Sector Motorhome)."
+      },
+      pt: {
+        badge_node: "Nodo Verificado Park & Stay",
+        hero_t: "Bem-vindo ao Park & Stay Corujão! 🚐🌴",
+        hero_s: "Estacionamento de Motorhomes · Lagoinha do Norte",
+        wifi_t: "1. Conexão Wi-Fi do Espaço",
+        wifi_ssid_l: "Rede Wi-Fi:",
+        wifi_pass_l: "Senha:",
+        wifi_btn: "Copiar Senha",
+        wifi_copied: "Senha copiada: ",
+        weather_loading: "Carregando clima...",
+        rules_t: "2. Regras de Convivência e Vizinhança",
+        r_quiet_t: "🔇 Horário de Silêncio Estrito (22:00 às 08:00 hs):",
+        r_quiet_d: "O espaço faz divisa direta com os Lofts do Residencial. Proibido som alto, caixas de som e geradores elétricos.",
+        r_water_drop_t: "⛔ Proibido Sair Pingando Água:",
+        r_water_drop_d: "Estritamente proibido deixar o pátio vazando água cinza ou negra pela entrada de pedestres e carros.",
+        r_speed_t: "🐢 Velocidade Máxima (5 km/h):",
+        r_speed_d: "Passo de homem em todo o estacionamento. Prioridade absoluta a pedestres e crianças.",
+        r_trailer_t: "🚗 Veículos de Tração e Trailers:",
+        r_trailer_d: "O carro de tração deve ser desengatado e estacionado exclusivamente no setor de carros.",
+        r_awning_t: "⛺ Toldos, Mesas e Vagas:",
+        r_awning_d: "A abertura de toldos e mesas deve respeitar a largura da vaga designada sem invadir o espaço vizinho.",
+        r_nature_t: "🌿 Natureza e Proteção de Fauna:",
+        r_nature_d: "Estamos próximos ao morro e à reserva do rio. Proibido deixar lixo fora dos veículos à noite para não atrair animais silvestres.",
+        r_pets_t: "🐾 Pets (Pet Friendly Responsável):",
+        r_pets_d: "Sempre na coleira nas áreas comuns e recolha imediata dos dejetos (lei estadual de SC).",
+        serv_t: "3. Manual Técnico de Serviços",
+        serv_elec_t: "Eletricidade 220V (10A)",
+        serv_elec_d: "Tomadas 220V/10A. Para consumos maiores, consulte a administração previamente.",
+        serv_water_t: "Abastecimento de Água Limpa",
+        serv_water_d: "Torneira para enchimento de tanques. Conexão permanente direta não é permitida pela alta pressão da rede.",
+        serv_waste_t: "Descarte de Efluentes (Cinzas e Negras)",
+        serv_waste_d: "Sistema lateral integrado. Descarte com mangueira e potys permitido à noite, fora do horário de carros de praia.",
+        serv_bath_t: "Banheiros e Chuveiros de Praia",
+        serv_bath_d: "Duchas externas frias de praia. Banheiros de uso compartilhado higiênico; proibido usar como lavanderia ou chuveiro pessoal.",
+        guide_t: "4. Serviços e Comércios de Confiança",
+        mini_t: "🥩 Minimercado & Carnes Corujão",
+        mini_d: "No complexo: bebidas geladas, gelo, carvão, lenha e carnes para churrasco.",
+        rancho_t: "🦐 Restaurante Rancho Do Pescador Lagoinha",
+        rancho_d: "A 1 minuto a pé na praia. 🏆 Melhor Restaurante de Frutos do Mar de Floripa.",
+        mech_t: "🛠️ Borracharias e Oficinas 24h",
+        mech_d: "Socorro para pneus pesados e mecânica em Ponta das Canas (a 1.5 km).",
+        bus_t: "🚌 Transporte para o Centro",
+        bus_d: "Ponto a 50 metros. Linha 1122 Executivo Praia Brava direto ao centro.",
+        badge_inside: "Complexo",
+        chk_t: "5. Checklist de Saída (Até as 11:00 hs)",
+        k1: "Desconectar cabo 220V e guardar mangueiras",
+        k2: "Fechar registros e conferir vedação de válvulas",
+        k3: "Deixar a vaga limpa e sem resíduos",
+        k4: "Quitar saldo restante com a administração (Martín ou Marcos)",
+        wa_prompt: "Precisa falar com a equipe de anfitriões?",
+        wa_btn: "Falar com a Administração",
+        wa_msg: "Olá! Estou entrando em contato através do Concierge Digital do Park & Stay Corujão (Setor Motorhome)."
+      },
+      en: {
+        badge_node: "Verified Park & Stay Node",
+        hero_t: "Welcome to Park & Stay Corujão! 🚐🌴",
+        hero_s: "RV & Motorhome Parking · Lagoinha do Norte",
+        wifi_t: "1. On-Site Wi-Fi Network",
+        wifi_ssid_l: "Wi-Fi Network:",
+        wifi_pass_l: "Password:",
+        wifi_btn: "Copy Password",
+        wifi_copied: "Password copied: ",
+        weather_loading: "Loading weather...",
+        rules_t: "2. House & Neighbor Rules",
+        r_quiet_t: "🔇 Strict Quiet Hours (10:00 PM to 08:00 AM):",
+        r_quiet_d: "Directly borders residential lofts and homes. Loud noise, speakers, and generators strictly prohibited.",
+        r_water_drop_t: "⛔ No Dripping Water on Exit:",
+        r_water_drop_d: "Strictly forbidden to exit the lot while dripping grey or black water through entry gates.",
+        r_speed_t: "🐢 Speed Limit (5 km/h / 3 mph):",
+        r_speed_d: "Walking speed throughout the lot. Pedestrians and children always have right of way.",
+        r_trailer_t: "🚗 Towing Vehicles & Trailers:",
+        r_trailer_d: "Travel trailers must decouple tow vehicles and park them in the dedicated car area.",
+        r_awning_t: "⛺ Awnings & Tables:",
+        r_awning_d: "Awnings, tables, and chairs must stay strictly within your designated vehicle bay width.",
+        r_nature_t: "🌿 Wildlife Protection & Nature:",
+        r_nature_d: "Located by a natural reserve. Do not leave trash bags on the ground overnight to prevent attracting animals.",
+        r_pets_t: "🐾 Pets (Responsible Pet Policy):",
+        r_pets_d: "Always leashed in common areas. Immediate waste cleanup is mandatory by Santa Catarina law.",
+        serv_t: "3. Technical Services Guide",
+        serv_elec_t: "Electricity 220V (10A)",
+        serv_elec_d: "Individual 220V/10A outlets. Consult on-site hosts for heavy appliances or higher amps.",
+        serv_water_t: "Fresh Water Refill",
+        serv_water_d: "Tap for tank refills. Permanent hose connections not allowed due to high water line pressure.",
+        serv_waste_t: "Dumping Station (Grey & Black)",
+        serv_waste_d: "Lateral sewer line with strategic dump ports. Drain hose and cassette dumping permitted at night.",
+        serv_bath_t: "Restrooms & Cold Beach Showers",
+        serv_bath_d: "Cold outdoor beach showers available. Shared restrooms are for hygienic use only, not for personal showers.",
+        guide_t: "4. Trusted Local Services",
+        mini_t: "🥩 Minimarket & Butcher Shop Corujão",
+        mini_d: "Inside resort: cold drinks, ice, charcoal, firewood, and fresh barbecue cuts.",
+        rancho_t: "🦐 Rancho Do Pescador Restaurant",
+        rancho_d: "1 minute walk on the beach. 🏆 Best Seafood Restaurant in Floripa.",
+        mech_t: "🛠️ 24h Tire Repair & Mechanics",
+        mech_d: "Heavy vehicle assistance and tire shops in Ponta das Canas (1.5 km away).",
+        bus_t: "🚌 Transit to Downtown",
+        bus_d: "Bus stop 50 meters away. Line 1122 Executivo straight to downtown.",
+        badge_inside: "On-site",
+        chk_t: "5. Departure Checklist (By 11:00 AM)",
+        k1: "Disconnect 220V power and roll up water hoses",
+        k2: "Close all dump valves securely and ensure no dripping",
+        k3: "Leave your vehicle bay completely clean",
+        k4: "Settle pending balance with on-site staff (Martín or Marcos)",
+        wa_prompt: "Need technical assistance or checking out?",
+        wa_btn: "Message On-Site Management",
+        wa_msg: "Hello! I am contacting you from the Digital Concierge at Park & Stay Corujão (RV Section)."
+      }
+    };
+
+    function copyWifiMH() {
+      const pass = document.getElementById("wifiPassMH").innerText;
+      navigator.clipboard.writeText(pass);
+      alert(translations[currentLang].wifi_copied + pass);
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + lang);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      document.getElementById('hero-title').innerText = translations[lang].hero_t;
+      document.getElementById('hero-sub').innerText = translations[lang].hero_s;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.innerText = translations[lang][key];
+        }
+      });
+    }
+
+    function abrirWhatsAppMH() {
+      const tel = "5492235678263";
+      const msj = encodeURIComponent(translations[currentLang].wa_msg);
+      window.open("https://api.whatsapp.com/send?phone=" + tel + "&text=" + msj, "_blank");
+    }
+
+    async function fetchWeather() {
+      try {
+        const res = await fetch("[suspicious link removed]");
+        if (res.ok) {
+          const data = await res.json();
+          const temp = Math.round(data.current_weather.temperature);
+          const wind = Math.round(data.current_weather.windspeed);
+          const code = data.current_weather.weathercode;
+
+          document.getElementById('weather-temp').innerText = temp + "°C";
+          document.getElementById('weather-wind').innerText = "Viento: " + wind + " km/h";
+
+          let conditionText = "Despejado / Soleado";
+          let iconClass = "bi-sun-fill";
+
+          if (code >= 1 && code <= 3) {
+            conditionText = "Parcialmente nublado";
+            iconClass = "bi-cloud-sun-fill";
+          } else if (code >= 51 && code <= 67) {
+            conditionText = "Lluvia ligera / Llovizna";
+            iconClass = "bi-cloud-drizzle-fill";
+          } else if (code >= 80 && code <= 99) {
+            conditionText = "Chubascos / Tormenta";
+            iconClass = "bi-cloud-lightning-rain-fill";
+          }
+
+          document.getElementById('weather-condition').innerText = conditionText;
+          document.getElementById('weather-icon').className = "bi " + iconClass + " fs-2";
+        }
+      } catch (e) {
+        document.getElementById('weather-condition').innerText = "Lagoinha (Clima costero)";
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const userLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (userLang.startsWith('pt')) {
+        setLanguage('pt');
+      } else if (userLang.startsWith('en')) {
+        setLanguage('en');
+      } else {
+        setLanguage('es');
+      }
+      fetchWeather();
+    });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js');
+    }
+  </script>
+</body>
+</html>
