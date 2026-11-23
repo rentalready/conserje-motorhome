@@ -69,6 +69,13 @@
       margin-bottom: 16px;
       box-shadow: 0 4px 12px rgba(2, 128, 144, 0.2);
     }
+    .workation-card {
+      background: linear-gradient(135deg, #1b3a4b 0%, #2c5d77 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
+    }
     .weather-temp { font-size: 2.2rem; font-weight: 800; line-height: 1; }
 
     /* Selector de Idiomas */
@@ -99,11 +106,27 @@
     .rule-strict { background-color: #fef2f2; border-left: 4px solid #ef4444; }
     .rule-warn { background-color: #fffbeb; border-left: 4px solid #f59e0b; }
     .rule-ok { background-color: #f0fdf4; border-left: 4px solid #22c55e; }
+
+    .emergency-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #1e293b;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.82rem;
+      margin-bottom: 6px;
+    }
+    .emergency-btn:hover { background: #f1f5f9; color: #0f172a; }
   </style>
 </head>
 <body>
 
-  <!-- HEADER INTEGRADO (TRILINGÜE + TEXTO CÁLIDO + IMAGEN) -->
+  <!-- HEADER INTEGRADO -->
   <div class="text-center" style="background: #06222b; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25);">
     
     <div class="d-flex justify-content-between align-items-center px-3 pt-3" style="max-width: 440px; margin: 0 auto;">
@@ -117,9 +140,9 @@
       </div>
     </div>
 
-    <!-- Título de Bienvenida Cálido -->
+    <!-- Título de Bienvenida Actualizado -->
     <div class="pt-3 pb-1 px-3 text-white">
-      <h2 id="hero-title" class="h4 fw-bold mb-1" style="letter-spacing: 0.5px;">¡Hola! Soy tu Conserje Digital! 🚐🌴</h2>
+      <h2 id="hero-title" class="h4 fw-bold mb-1" style="letter-spacing: 0.5px;">¡Hola! ¡Soy tu Conserje Digital! 🚐🌴</h2>
       <p id="hero-sub" class="small text-white-50 mb-0">Park & Stay Corujão · Lagoinha do Norte · Florianópolis</p>
     </div>
 
@@ -131,14 +154,14 @@
 
   <div class="container py-3" style="max-width: 540px;">
 
-    <!-- MENSAJE DE BIENVENIDA CÁLIDO -->
+    <!-- MENSAJE DE BIENVENIDA -->
     <div class="card card-custom p-3 border-start border-4 border-success">
       <div class="d-flex gap-3 align-items-center">
         <div class="fs-1 text-success"><i class="bi bi-geo-alt-heart"></i></div>
         <div>
-          <h6 class="fw-bold mb-1" data-i18n="welcome_t">Tu lugar seguro frente al mar</h6>
+          <h6 class="fw-bold mb-1" data-i18n="welcome_t">Tu punto seguro y conectado frente al mar</h6>
           <p class="small text-muted mb-0" data-i18n="welcome_d">
-            Queremos que te sientas como en casa mientras disfrutás de una de las playas más lindas y tranquilas de la isla. Estamos para cuidarte y hacer que tu estadía sobre ruedas sea placentera y sin complicaciones.
+            Queremos que te sientas como en casa mientras disfrutás de Lagoinha do Norte. Estamos para brindarte soporte técnico, información de servicio en tiempo real y asistencia permanente.
           </p>
         </div>
       </div>
@@ -162,7 +185,29 @@
       </div>
     </div>
 
-    <!-- 2. WIDGET DE CLIMA EN VIVO -->
+    <!-- 2. SELLO WORKATION READY -->
+    <div class="workation-card">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-laptop fs-3 text-info"></i>
+          <div>
+            <h6 class="fw-bold mb-0">💻 <span data-i18n="work_badge">Apto Workation · Sello Workation Ready</span></h6>
+            <span class="badge bg-success bg-opacity-75" style="font-size: 0.68rem;" data-i18n="work_cert">Certificación Rental Ready</span>
+          </div>
+        </div>
+      </div>
+      <p class="small mb-2 text-white-50" style="font-size: 0.8rem; line-height: 1.3;" data-i18n="work_desc">
+        Estabilidad de red, latencia, entorno eléctrico y condiciones operativas verificadas para trabajo remoto rodantero. No promete velocidad extrema, sino una experiencia confiable y continua.
+      </p>
+      <div class="bg-black bg-opacity-25 p-2 rounded-3 text-center border border-light border-opacity-10">
+        <span class="badge bg-light text-dark fw-bold mb-1" style="font-size: 0.72rem;" data-i18n="work_test">Conectividad testeada 16/10/2026</span>
+        <div class="small fw-bold text-white mt-1">
+          📥 60 Mbps Descarga &nbsp;|&nbsp; 📤 30 Mbps Subida &nbsp;|&nbsp; ⚡ Latencia: 20ms
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. CLIMA Y ALERTAS / MONITOREO COSTERO -->
     <div class="weather-card">
       <div class="d-flex justify-content-between align-items-center mb-2">
         <div>
@@ -179,29 +224,54 @@
       </div>
     </div>
 
-    <!-- 3. MÓDULO DE PLAYAS Y ESTADO DEL AGUA (IMA SC) -->
+    <!-- 4. BOLETÍN DEL DÍA & MONITOREO COSTERO (IMA SC) -->
     <div class="beach-card">
       <div class="d-flex justify-content-between align-items-center mb-2">
         <div class="d-flex align-items-center gap-2">
           <i class="bi bi-water fs-4"></i>
           <div>
-            <h6 class="fw-bold mb-0" data-i18n="beach_card_t">Playas y Monitoreo Costero</h6>
-            <span class="small text-white-50" data-i18n="beach_card_s">Lagoinha do Norte a solo 1 minuto a pie</span>
+            <h6 class="fw-bold mb-0" data-i18n="beach_card_t">Alertas y Monitoreo Costero</h6>
+            <span class="small text-white-50" data-i18n="beach_card_s">Boletín Oficial del Día</span>
           </div>
         </div>
       </div>
-      <p class="small mb-2" data-i18n="beach_card_d" style="font-size: 0.8rem; line-height: 1.3;">
-        Aguas cálidas, calmas y familiares. Podés verificar el informe oficial de balneabilidad semanal emitido por el Instituto do Meio Ambiente (IMA) de Santa Catarina:
-      </p>
+      <div class="bg-white bg-opacity-10 p-2 rounded-3 mb-2" style="font-size: 0.8rem; line-height: 1.35;">
+        <i class="bi bi-check-circle-fill text-warning"></i> <strong data-i18n="boletin_t">Boletín del Día:</strong> <span data-i18n="boletin_d">Condiciones normales de playa. Agua apta para baño según monitoreo oficial IMA. Viento suave.</span>
+      </div>
       <button onclick="abrirBalneabilidade()" class="btn btn-sm btn-light text-dark fw-bold py-1 px-3 rounded-pill w-100" style="font-size: 0.78rem;">
         <i class="bi bi-patch-check-fill text-success"></i> <span data-i18n="beach_btn">Consultar Balneabilidad Oficial IMA</span>
       </button>
     </div>
 
-    <!-- 4. LÍNEAS DE SERVICIO (LATERAL NORTE) & OPERATORIA TÉCNICA -->
+    <!-- 5. TELÉFONOS DE EMERGENCIA Y ASISTENCIA INMEDIATA -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-tools text-primary"></i> <span data-i18n="serv_t">2. Conexiones Técnicas (Sector Lateral Norte)</span>
+        <i class="bi bi-telephone-plus text-danger"></i> <span data-i18n="emerg_t">Central de Emergencias y Salud</span>
+      </div>
+      <div class="card-body-custom">
+        <a href="tel:192" class="emergency-btn">
+          <span><i class="bi bi-hospital text-danger me-2"></i> SAMU / Emergencias Médicas</span>
+          <span class="badge bg-danger">192</span>
+        </a>
+        <a href="tel:190" class="emergency-btn">
+          <span><i class="bi bi-shield-shaded text-primary me-2"></i> Policía Militar</span>
+          <span class="badge bg-primary">190</span>
+        </a>
+        <a href="tel:193" class="emergency-btn">
+          <span><i class="bi bi-fire text-warning me-2"></i> Bomberos</span>
+          <span class="badge bg-warning text-dark">193</span>
+        </a>
+        <div class="p-2 rounded bg-light border mt-2" style="font-size: 0.8rem;">
+          <strong>🏥 UPA Norte (Canasvieiras):</strong> Rua Francisco Faustino dos Santos, Canasvieiras. Atención médica 24 horas.<br>
+          <strong>💊 Farmacia de Turno:</strong> En Ponta das Canas (a 1.2 km). Cuenta con servicio de Delivery por WhatsApp.
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. LÍNEAS DE SERVICIO (LATERAL NORTE) & OPERATORIA TÉCNICA -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-tools text-primary"></i> <span data-i18n="serv_t">Servicios Técnicos (Lateral Norte)</span>
       </div>
       <div class="card-body-custom">
         <div class="alert alert-info border-0 p-2 mb-3" style="font-size: 0.82rem;">
@@ -211,7 +281,7 @@
 
         <div class="mb-3">
           <h6 class="fw-bold small mb-1"><i class="bi bi-plug-fill text-warning"></i> <span data-i18n="serv_elec_t">Electricidad 220V (10A)</span></h6>
-          <p class="small text-muted mb-0" data-i18n="serv_elec_d">Tomas individuales de 220V/10A. Para consumos especiales o aires acondicionados de alto amperaje, consultá antes a los anfitriones para evitar sobrecargas en la red.</p>
+          <p class="small text-muted mb-0" data-i18n="serv_elec_d">Tomas individuales de 220V/10A. Para consumos especiales o equipos de alto consumo, consultá antes a la administración para evitar sobrecargas en la red.</p>
         </div>
         <hr class="my-2">
 
@@ -223,110 +293,110 @@
 
         <div class="mb-3">
           <h6 class="fw-bold small mb-1"><i class="bi bi-recycle text-secondary"></i> <span data-i18n="serv_waste_t">Desagote de Aguas Grises y Negras</span></h6>
-          <p class="small text-muted mb-0" data-i18n="serv_waste_d">Bocas de descarga en el lateral norte. El vaciado mediante manguera y cassettes/potys se realiza preferentemente en horario nocturno, cuando no hay circulación de autos del estacionamiento diurno.</p>
+          <p class="small text-muted mb-0" data-i18n="serv_waste_d">Bocas de descarga en el lateral norte. El vaciado mediante manguera y cassettes/potys se realiza preferentemente en horario nocturno, cuando concluye la circulación de vehículos diurnos.</p>
         </div>
         <hr class="my-2">
 
         <div>
           <h6 class="fw-bold small mb-1"><i class="bi bi-badge-wc-fill text-primary"></i> <span data-i18n="serv_bath_t">Sanitarios y Duchas de Playa</span></h6>
-          <p class="small text-muted mb-0" data-i18n="serv_bath_d">Contamos con duchas exteriores frías para quitarse la arena. Los baños son de uso higiénico compartido. <strong>Importante:</strong> por higiene de todos, <em>está prohibido lavar vajilla, platos, ollas o elementos de cocina dentro de los baños</em>.</p>
+          <p class="small text-muted mb-0" data-i18n="serv_bath_d">Disponemos de duchas exteriores frías para quitarse la arena. Los baños son de uso higiénico compartido. <strong>Importante:</strong> por higiene de todos, <em>está prohibido lavar vajilla, platos, ollas o elementos de cocina dentro de los baños</em>.</p>
         </div>
       </div>
     </div>
 
-    <!-- 5. NORMAS DE CONVIVENCIA, FUEGO Y ARMONÍA -->
+    <!-- 7. NORMAS DE CONVIVENCIA Y COMPORTAMIENTO -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-heart-pulse text-danger"></i> <span data-i18n="rules_t">3. Normas de Convivencia y Armonía Vecinal</span>
+        <i class="bi bi-shield-check text-success"></i> <span data-i18n="rules_t">Normas de Convivencia y Armonía Vecinal</span>
       </div>
       <div class="card-body-custom">
         
         <div class="rule-box rule-ok">
           <strong data-i18n="r_fire_t">🔥 Asados y Fuego en Fogones Portátiles:</strong><br>
-          <span data-i18n="r_fire_d">¡Nos encanta el asado rodantero! Podés hacer fuego exclusivamente en <strong>fogones elevados o parrillas portátiles</strong> propias. Está terminantemente prohibido hacer fuego directo sobre el suelo o el césped.</span>
+          <span data-i18n="r_fire_d">Podés hacer fuego exclusivamente en <strong>fogones elevados o parrillas portátiles</strong> propias. Está terminantemente prohibido hacer fuego directo sobre el suelo o el césped.</span>
         </div>
 
         <div class="rule-box rule-warn">
           <strong data-i18n="r_quiet_t">🔇 Descanso y Silencio (22:00 a 08:00 hs):</strong><br>
-          <span data-i18n="r_quiet_d">Colindamos con los Lofts del Residencial y vecinos residentes. Te pedimos evitar ruidos molestos, música con volumen alto o generadores en este horario para que todos descansemos bien.</span>
+          <span data-i18n="r_quiet_d">Colindamos con los Lofts del Residencial y vecinos familiares. Evitar ruidos molestos, música con volumen alto o generadores en este horario.</span>
         </div>
 
         <div class="rule-box rule-warn">
           <strong data-i18n="r_speed_t">🐢 Velocidad a Paso de Hombre (5 km/h):</strong><br>
-          <span data-i18n="r_speed_d">Circulá muy despacio dentro de todo el predio. La prioridad siempre la tienen los peatones, niños que van a la playa y mascotas.</span>
+          <span data-i18n="r_speed_d">Circulá muy despacio dentro de todo el predio. La prioridad siempre la tienen los peatones, niños de playa y mascotas.</span>
         </div>
 
         <div class="rule-box rule-ok">
           <strong data-i18n="r_awning_t">⛺ Toldos, Mesas y Tu Espacio:</strong><br>
-          <span data-i18n="r_awning_d">Desplegá tu toldo y tus reposeras dentro del ancho asignado a tu parcela, asegurando el paso cómodo de los demás vehículos.</span>
+          <span data-i18n="r_awning_d">Desplegá tu toldo y tus reposeras dentro del ancho asignado a tu parcela, asegurando el paso de los demás rodanteros.</span>
         </div>
 
         <div class="rule-box rule-strict">
           <strong data-i18n="r_nature_t">🌿 Cuidado Ambiental y Basura Nocturna:</strong><br>
-          <span data-i18n="r_nature_d">Estamos rodeados de morros y naturaleza viva. No dejes bolsas de residuos en el piso durante la noche para evitar atraer animales silvestres. Utilizá los cestos cerrados del predio.</span>
+          <span data-i18n="r_nature_d">Estamos rodeados de morros y naturaleza viva. No dejes bolsas de residuos en el piso durante la noche para evitar atraer animales silvestres. Utilizá los cestos cerrados.</span>
         </div>
 
         <div class="rule-box rule-warn">
           <strong data-i18n="r_pets_t">🐾 Mascotas Felices y Responsables:</strong><br>
-          <span data-i18n="r_pets_d">Tu amigo de cuatro patas es bienvenido. Mantenelo con correa en zonas comunes y recogé sus necesidades de inmediato (por ley ambiental de Santa Catarina).</span>
+          <span data-i18n="r_pets_d">Mantené a tu mascota siempre con correa en zonas comunes y recogé sus necesidades de inmediato (por ley ambiental de Santa Catarina).</span>
         </div>
 
       </div>
     </div>
 
-    <!-- 6. MOVILIDAD & ALIANZAS RENTAL READY -->
+    <!-- 8. RECOMENDACIONES DEL ANFITRIÓN & DISTANCIAS -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-compass text-primary"></i> <span data-i18n="mov_t">4. Movilidad en la Isla & Servicios Vecinos</span>
+        <i class="bi bi-compass text-primary"></i> <span data-i18n="rec_t">Recomendaciones del Anfitrión & Rutas</span>
       </div>
       <div class="card-body-custom">
         
-        <div class="mb-3">
-          <h6 class="fw-bold small mb-1"><i class="bi bi-bus-front text-primary"></i> <span data-i18n="bus_title">Transporte Público a 50 metros</span></h6>
-          <p class="small text-muted mb-0" data-i18n="bus_desc">
-            A solo 50 m de la puerta tenés la parada de autobús. La línea <strong>266 Executivo Praia Brava</strong> te lleva directo y con aire acondicionado al centro de Florianópolis, y hay líneas alimentadoras a todas las playas del norte.
-          </p>
+        <h6 class="fw-bold small mb-2"><i class="bi bi-umbrella text-info"></i> Playas Imperdibles (Distancias desde el Predio):</h6>
+        <div class="row g-2 mb-3" style="font-size: 0.8rem;">
+          <div class="col-6">🏖️ Lagoinha do Norte: <strong>50 m</strong></div>
+          <div class="col-6">🏖️ Ponta das Canas: <strong>1,2 km</strong></div>
+          <div class="col-6">🏖️ Praia Brava: <strong>2,5 km</strong></div>
+          <div class="col-6">🏖️ Cachoeira do Bom Jesus: <strong>4,2 km</strong></div>
+          <div class="col-6">🏖️ Canasvieiras: <strong>7,5 km</strong></div>
+          <div class="col-6">🏖️ Jurerê: <strong>11,5 km</strong></div>
+          <div class="col-6">🏖️ Ingleses: <strong>12,5 km</strong></div>
+          <div class="col-6">🏖️ Santo Antônio de Lisboa: <strong>19,5 km</strong></div>
         </div>
+
         <hr class="my-2">
+        <h6 class="fw-bold small mb-2"><i class="bi bi-signpost-2 text-success"></i> Senderos y Naturaleza (Trekking):</h6>
+        <p class="small text-muted mb-1" style="font-size: 0.82rem;">
+          🥾 <strong>Trilha da Lagoinha do Norte:</strong> caminata costera familiar bordeando el morro.<br>
+          🥾 <strong>Trilha do Morro das Feiticeiras:</strong> sendero con impresionante vista panorámica de toda la bahía norte.
+        </p>
 
-        <div class="mb-3">
-          <h6 class="fw-bold small mb-1"><i class="bi bi-car-front-fill text-success"></i> <span data-i18n="uber_title">Ubers Seguros & Alianzas Rental Ready</span></h6>
-          <p class="small text-muted mb-0" data-i18n="uber_desc">
-            La zona cuenta con excelente cobertura de Uber económico y seguro. Además, gracias a las <strong>alianzas comerciales de Rental Ready</strong>, nuestros huéspedes cuentan con preferencia en la asignación de viajes durante temporada alta.
-          </p>
-        </div>
         <hr class="my-2">
+        <h6 class="fw-bold small mb-2"><i class="bi bi-egg-fried text-warning"></i> Gastronomía & Comercios Vecinos:</h6>
+        <p class="small text-muted mb-0" style="font-size: 0.82rem;">
+          🍽️ <strong>Rancho Do Pescador Lagoinha:</strong> A 1 min en la playa (pescado fresco y mariscos frente al mar).<br>
+          🥩 <strong>Minimercado & Carnicería Corujão:</strong> Dentro del complejo (bebidas frías, hielo, carbón, leña y carnes para asado).
+        </p>
 
-        <div class="d-flex justify-content-between align-items-start mb-2">
-          <div>
-            <h6 class="fw-bold small mb-0" data-i18n="mini_t">🥩 Minimercado & Carnicería Corujão</h6>
-            <span class="small text-muted" data-i18n="mini_d">Dentro del complejo: bebidas frías, hielo, carbón, leña y cortes para tu asado.</span>
-          </div>
-          <span class="badge bg-primary bg-opacity-10 text-primary border">En el predio</span>
-        </div>
-
-        <div class="d-flex justify-content-between align-items-start">
-          <div>
-            <h6 class="fw-bold small mb-0" data-i18n="rancho_t">🦐 Rancho Do Pescador Lagoinha</h6>
-            <span class="small text-muted" data-i18n="rancho_d">A 1 minuto a pie en la playa. 🏆 Melhor Restaurante de Frutos do Mar de Floripa.</span>
-          </div>
-          <span class="badge bg-success bg-opacity-10 text-success border">1 min playa</span>
-        </div>
+        <hr class="my-2">
+        <h6 class="fw-bold small mb-2"><i class="bi bi-bus-front text-primary"></i> Movilidad y Transporte:</h6>
+        <p class="small text-muted mb-0" style="font-size: 0.82rem;">
+          🚌 <strong>Autobús a 50m:</strong> Línea 1122 Executivo Praia Brava con aire acondicionado al centro de Florianópolis y líneas locales a playas.<br>
+          🚗 <strong>Ubers Seguros & Alianzas Rental Ready:</strong> Amplia disponibilidad de viajes con preferencia para nuestros huéspedes en temporada alta.
+        </p>
 
       </div>
     </div>
 
-    <!-- 7. PROTOCOLO DE SALIDA CON ALERTA ROJA (CHECK-OUT) -->
+    <!-- 9. PROTOCOLO DE SALIDA (CHECK-OUT) -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-check2-circle text-primary"></i> <span data-i18n="chk_t">5. Checklist de Salida (Hasta las 11:00 hs)</span>
+        <i class="bi bi-check2-circle text-primary"></i> <span data-i18n="chk_t">Checklist de Salida (Hasta las 11:00 hs)</span>
       </div>
       <div class="card-body-custom">
         
-        <!-- Alerta Prohibitiva Destacada -->
         <div class="rule-box rule-strict mb-3">
           <h6 class="fw-bold text-danger mb-1"><i class="bi bi-slash-circle-fill"></i> <span data-i18n="r_water_drop_t">⛔ Terminantemente Prohibido Salir Chorreando Agua:</span></h6>
-          <span data-i18n="r_water_drop_d">Por respeto a los peatones y mantenimiento de los accesos, está estrictamente prohibido retirarse del predio goteando o vaciando aguas grises por el portón. Verificá el cierre hermético de tus llaves y esclusas antes de arrancar.</span>
+          <span data-i18n="r_water_drop_d">Por respeto a los peatones y mantenimiento de accesos, está estrictamente prohibido retirarse del predio goteando o vaciando aguas por el portón. Verificá el cierre hermético de tus llaves y esclusas antes de mover el vehículo.</span>
         </div>
 
         <div class="form-check mb-2">
@@ -335,7 +405,7 @@
         </div>
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" id="k2">
-          <label class="form-check-label small" for="k2" data-i18n="k2">Revisar que la parcela quede limpia y sin residuos</label>
+          <label class="form-check-label small" for="k2" data-i18n="k2">Revisar que la parcela quede completamente limpia</label>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" id="k3">
@@ -344,22 +414,43 @@
       </div>
     </div>
 
-    <!-- 8. RESEÑAS Y BUZÓN DE SUGERENCIAS ANÓNIMAS -->
+    <!-- 10. RESEÑAS, IOVERLANDER Y SUGERENCIAS ANÓNIMAS -->
     <div class="card card-custom p-3 border-0 shadow-sm text-center">
-      <h6 class="fw-bold mb-1" data-i18n="feedback_t">Tu opinión nos ayuda a crecer</h6>
-      <p class="small text-muted mb-3" data-i18n="feedback_d">¿Disfrutaste tu estadía o tenés alguna sugerencia para mejorar el predio? Podés dejarnos tu reseña pública o enviarnos un comentario constructivo 100% anónimo.</p>
+      <h6 class="fw-bold mb-1" data-i18n="feedback_t">Tu experiencia en la comunidad rodantera</h6>
+      <p class="small text-muted mb-3" data-i18n="feedback_d">Calificá nuestro punto de apoyo o envianos un comentario constructivo 100% anónimo.</p>
       
       <div class="d-flex flex-column gap-2">
+        <!-- Reseña Google 5 Estrellas -->
         <button onclick="abrirResenas()" class="btn btn-outline-warning text-dark py-2 rounded-pill fw-bold" style="font-size: 0.85rem;">
           <i class="bi bi-star-fill text-warning"></i> <span data-i18n="btn_review">Dejanos tu Reseña 5 Estrellas en Google</span>
         </button>
+        
+        <!-- Reseña iOverlander -->
+        <button onclick="abrirIOverlander()" class="btn btn-outline-success py-2 rounded-pill fw-bold" style="font-size: 0.85rem;">
+          <i class="bi bi-geo-alt-fill text-success"></i> <span data-i18n="btn_ioverlander">Dejar Reseña en iOverlander</span>
+        </button>
+
+        <!-- Sugerencia Anónima -->
         <button onclick="abrirSugerencias()" class="btn btn-outline-secondary py-2 rounded-pill" style="font-size: 0.82rem;">
           <i class="bi bi-envelope-heart"></i> <span data-i18n="btn_anon">Enviar Sugerencia Anónima a los Anfitriones</span>
         </button>
       </div>
     </div>
 
-    <!-- 9. CONTACTO DIRECTO CON ANFITRIONES -->
+    <!-- 11. REDES SOCIALES Y WEB -->
+    <div class="card card-custom p-3 text-center border-0">
+      <h6 class="fw-bold small mb-2 text-muted" data-i18n="social_t">Conectá con nosotros</h6>
+      <div class="d-flex justify-content-center gap-2">
+        <a href="https://www.instagram.com/estacionamiento_corujao/" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+          <i class="bi bi-instagram"></i> Instagram
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61596299109713" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+          <i class="bi bi-facebook"></i> Facebook
+        </a>
+      </div>
+    </div>
+
+    <!-- 12. CONTACTO DIRECTO CON ANFITRIONES -->
     <div class="card card-custom p-3 text-center border-0 shadow-sm">
       <span class="small text-muted mb-2 d-block" data-i18n="wa_prompt">¿Necesitás coordinar asistencia técnica o tu llegada/salida?</span>
       <button onclick="abrirWhatsAppMH()" class="btn btn-action py-2 px-4 rounded-pill">
@@ -387,147 +478,153 @@
     const translations = {
       es: {
         badge_node: "Nodo Verificado Park & Stay",
-        hero_t: "¡Bienvenido a casa, rodantero! 🚐🌴",
+        hero_t: "¡Hola! ¡Soy tu Conserje Digital! 🚐🌴",
         hero_s: "Park & Stay Corujão · Lagoinha do Norte · Florianópolis",
-        welcome_t: "Tu lugar seguro frente al mar",
-        welcome_d: "Queremos que te sientas como en casa mientras disfrutás de una de las playas más lindas y tranquilas de la isla. Estamos para cuidarte y hacer que tu estadía sobre ruedas sea placentera y sin complicaciones.",
+        welcome_t: "Tu punto seguro y conectado frente al mar",
+        welcome_d: "Queremos que te sientas como en casa mientras disfrutás de Lagoinha do Norte. Estamos para brindarte soporte técnico, información de servicio en tiempo real y asistencia permanente.",
         wifi_t: "1. Tu Conexión Wi-Fi Libre",
         wifi_ssid_l: "Red Wi-Fi:",
         wifi_pass_l: "Contraseña:",
         wifi_btn: "Copiar Contraseña",
         wifi_copied: "Contraseña copiada al portapapeles: ",
+        work_badge: "Apto Workation · Sello Workation Ready",
+        work_cert: "Certificación Rental Ready",
+        work_desc: "Estabilidad de red, latencia, entorno eléctrico y condiciones operativas verificadas para trabajo remoto rodantero. No promete velocidad extrema, sino una experiencia confiable y continua.",
+        work_test: "Conectividad testeada 16/10/2026",
         weather_loading: "Cargando clima en vivo...",
-        beach_card_t: "Playas y Monitoreo Costero",
-        beach_card_s: "Lagoinha do Norte a solo 1 minuto a pie",
-        beach_card_d: "Aguas cálidas, calmas y familiares. Podés verificar el informe oficial de balneabilidad semanal emitido por el Instituto do Meio Ambiente (IMA) de Santa Catarina:",
+        beach_card_t: "Alertas y Monitoreo Costero",
+        beach_card_s: "Boletín Oficial del Día",
+        boletin_t: "Boletín del Día:",
+        boletin_d: "Condiciones normales de playa. Agua apta para baño según monitoreo oficial IMA. Viento suave.",
         beach_btn: "Consultar Balneabilidad Oficial IMA",
-        serv_t: "2. Conexiones Técnicas (Sector Lateral Norte)",
+        emerg_t: "Central de Emergencias y Salud",
+        serv_t: "Servicios Técnicos (Lateral Norte)",
         serv_hub_t: "Central de Servicios:",
         serv_hub_d: "Sobre el lateral norte del predio se encuentran distribuidas las líneas correspondientes a cada plaza (electricidad, agua dulce y puntos de desagote).",
         serv_elec_t: "Electricidad 220V (10A)",
-        serv_elec_d: "Tomas individuales de 220V/10A. Para consumos especiales o aires acondicionados de alto amperaje, consultá antes a los anfitriones para evitar sobrecargas en la red.",
+        serv_elec_d: "Tomas individuales de 220V/10A. Para consumos especiales o equipos de alto consumo, consultá antes a la administración para evitar sobrecargas en la red.",
         serv_water_t: "Carga de Agua Dulce",
         serv_water_d: "Canilla para reabastecer tus tanques. No se permite dejar la manguera conectada de forma permanente y fija debido a la alta presión de la red hidráulica del complejo.",
         serv_waste_t: "Desagote de Aguas Grises y Negras",
-        serv_waste_d: "Bocas de descarga en el lateral norte. El vaciado mediante manguera y cassettes/potys se realiza preferentemente en horario nocturno, cuando no hay circulación de autos del estacionamiento diurno.",
+        serv_waste_d: "Bocas de descarga en el lateral norte. El vaciado mediante manguera y cassettes/potys se realiza preferentemente en horario nocturno, cuando concluye la circulación de vehículos diurnos.",
         serv_bath_t: "Sanitarios y Duchas de Playa",
-        serv_bath_d: "Contamos con duchas exteriores frías para quitarse la arena. Los baños son de uso higiénico compartido. Importante: por higiene de todos, está prohibido lavar vajilla, platos, ollas o elementos de cocina dentro de los baños.",
-        rules_t: "3. Normas de Convivencia y Armonía Vecinal",
+        serv_bath_d: "Disponemos de duchas exteriores frías para quitarse la arena. Los baños son de uso higiénico compartido. Importante: por higiene de todos, está prohibido lavar vajilla, platos, ollas o elementos de cocina dentro de los baños.",
+        rules_t: "Normas de Convivencia y Armonía Vecinal",
         r_fire_t: "🔥 Asados y Fuego en Fogones Portátiles:",
-        r_fire_d: "¡Nos encanta el asado rodantero! Podés hacer fuego exclusivamente en fogones elevados o parrillas portátiles propias. Está terminantemente prohibido hacer fuego directo sobre el suelo o el césped.",
+        r_fire_d: "Podés hacer fuego exclusivamente en fogones elevados o parrillas portátiles propias. Está terminantemente prohibido hacer fuego directo sobre el suelo o el césped.",
         r_quiet_t: "🔇 Descanso y Silencio (22:00 a 08:00 hs):",
-        r_quiet_d: "Colindamos con los Lofts del Residencial y vecinos residentes. Te pedimos evitar ruidos molestos, música con volumen alto o generadores en este horario para que todos descansemos bien.",
+        r_quiet_d: "Colindamos con los Lofts del Residencial y vecinos familiares. Evitar ruidos molestos, música con volumen alto o generadores en este horario.",
         r_speed_t: "🐢 Velocidad a Paso de Hombre (5 km/h):",
-        r_speed_d: "Circulá muy despacio dentro de todo el predio. La prioridad siempre la tienen los peatones, niños que van a la playa y mascotas.",
+        r_speed_d: "Circulá muy despacio dentro de todo el predio. La prioridad siempre la tienen los peatones, niños de playa y mascotas.",
         r_awning_t: "⛺ Toldos, Mesas y Tu Espacio:",
-        r_awning_d: "Desplegá tu toldo y tus reposeras dentro del ancho asignado a tu parcela, asegurando el paso cómodo de los demás vehículos.",
+        r_awning_d: "Desplegá tu toldo y tus reposeras dentro del ancho asignado a tu parcela, asegurando el paso de los demás rodanteros.",
         r_nature_t: "🌿 Cuidado Ambiental y Basura Nocturna:",
-        r_nature_d: "Estamos rodeados de morros y naturaleza viva. No dejes bolsas de residuos en el piso durante la noche para evitar atraer animales silvestres. Utilizá los cestos cerrados del predio.",
+        r_nature_d: "Estamos rodeados de morros y naturaleza viva. No dejes bolsas de residuos en el piso durante la noche para evitar atraer animales silvestres. Utilizá los cestos cerrados.",
         r_pets_t: "🐾 Mascotas Felices y Responsables:",
-        r_pets_d: "Tu amigo de cuatro patas es bienvenido. Mantenelo con correa en zonas comunes y recogé sus necesidades de inmediato (por ley ambiental de Santa Catarina).",
-        mov_t: "4. Movilidad en la Isla & Servicios Vecinos",
-        bus_title: "Transporte Público a 50 metros",
-        bus_desc: "A solo 50 m de la puerta tenés la parada de autobús. La línea 1122 Executivo Praia Brava te lleva directo y con aire acondicionado al centro de Florianópolis, y hay líneas alimentadoras a todas las playas del norte.",
-        uber_title: "Ubers Seguros & Alianzas Rental Ready",
-        uber_desc: "La zona cuenta con excelente cobertura de Uber económico y seguro. Además, gracias a las alianzas comerciales de Rental Ready, nuestros huéspedes cuentan con preferencia en la asignación de viajes durante temporada alta.",
-        mini_t: "🥩 Minimercado & Carnicería Corujão",
-        mini_d: "Dentro del complejo: bebidas frías, hielo, carbón, leña y cortes para tu asado.",
-        rancho_t: "🦐 Rancho Do Pescador Lagoinha",
-        rancho_d: "A 1 minuto a pie en la playa. 🏆 Melhor Restaurante de Frutos do Mar de Floripa.",
-        chk_t: "5. Checklist de Salida (Hasta las 11:00 hs)",
+        r_pets_d: "Mantené a tu mascota siempre con correa en zonas comunes y recogé sus necesidades de inmediato (por ley ambiental de Santa Catarina).",
+        rec_t: "Recomendaciones del Anfitrión & Rutas",
+        chk_t: "Checklist de Salida (Hasta las 11:00 hs)",
         r_water_drop_t: "⛔ Terminantemente Prohibido Salir Chorreando Agua:",
-        r_water_drop_d: "Por respeto a los peatones y mantenimiento de los accesos, está estrictamente prohibido retirarse del predio goteando o vaciando aguas grises por el portón. Verificá el cierre hermético de tus llaves y esclusas antes de arrancar.",
+        r_water_drop_d: "Por respeto a los peatones y mantenimiento de accesos, está estrictamente prohibido retirarse del predio goteando o vaciando aguas por el portón. Verificá el cierre hermético de tus llaves y esclusas antes de mover el vehículo.",
         k1: "Desconectar cable 220V y enrollar mangueras de agua",
-        k2: "Revisar que la parcela quede limpia y sin residuos",
+        k2: "Revisar que la parcela quede completamente limpia",
         k3: "Coordinar con la administración (Martín, María o Marcos) el cierre de estadía",
-        feedback_t: "Tu opinión nos ayuda a crecer",
-        feedback_d: "¿Disfrutaste tu estadía o tenés alguna sugerencia para mejorar el predio? Podés dejarnos tu reseña pública o enviarnos un comentario constructivo 100% anónimo.",
+        feedback_t: "Tu experiencia en la comunidad rodantera",
+        feedback_d: "Calificá nuestro punto de apoyo o envianos un comentario constructivo 100% anónimo.",
         btn_review: "Dejanos tu Reseña 5 Estrellas en Google",
+        btn_ioverlander: "Dejar Reseña en iOverlander",
         btn_anon: "Enviar Sugerencia Anónima a los Anfitriones",
+        social_t: "Conectá con nosotros",
         wa_prompt: "¿Necesitás coordinar asistencia técnica o tu llegada/salida?",
         wa_btn: "Hablar con la Administración",
         wa_msg: "¡Hola! Me comunico desde el Conserje Digital de Park & Stay Corujão (Sector Motorhome)."
       },
       pt: {
         badge_node: "Nodo Verificado Park & Stay",
-        hero_t: "Bem-vindo à sua casa, estradeiro! 🚐🌴",
+        hero_t: "Olá! Sou seu Concierge Digital! 🚐🌴",
         hero_s: "Park & Stay Corujão · Lagoinha do Norte · Florianópolis",
-        welcome_t: "Seu ponto seguro em frente ao mar",
-        welcome_d: "Queremos que você se sinta em casa enquanto aproveita uma das praias mais bonitas e tranquilas da ilha. Estamos aqui para cuidar da sua estadia sobre rodas com total tranquilidade.",
+        welcome_t: "Seu ponto seguro e conectado em frente ao mar",
+        welcome_d: "Queremos que você se sinta em casa em Lagoinha do Norte. Estamos prontos para oferecer suporte técnico, dados de serviço em tempo real e assistência contínua.",
         wifi_t: "1. Sua Conexão Wi-Fi Gratuita",
         wifi_ssid_l: "Rede Wi-Fi:",
         wifi_pass_l: "Senha:",
         wifi_btn: "Copiar Senha",
         wifi_copied: "Senha copiada: ",
+        work_badge: "Apto Workation · Selo Workation Ready",
+        work_cert: "Certificação Rental Ready",
+        work_desc: "Estabilidade de conexão, latência, ambiente elétrico e condições operacionais testadas para trabalho remoto. Não garante velocidade extrema, mas sim estabilidade e continuidade.",
+        work_test: "Conectividade testada 16/10/2026",
         weather_loading: "Carregando clima ao vivo...",
-        beach_card_t: "Praias e Monitoramento Costeiro",
-        beach_card_s: "Lagoinha do Norte a apenas 1 minuto a pé",
-        beach_card_d: "Águas quentes, calmas e ideais para a família. Você pode conferir o relatório oficial de balneabilidade emitido pelo IMA/SC:",
+        beach_card_t: "Alertas e Monitoramento Costeiro",
+        beach_card_s: "Boletim Oficial do Dia",
+        boletin_t: "Boletim do Dia:",
+        boletin_d: "Condições normais de praia. Água própria para banho segundo relatório IMA. Vento suave.",
         beach_btn: "Consultar Balneabilidade Oficial IMA",
-        serv_t: "2. Conexões Técnicas (Lateral Norte)",
+        emerg_t: "Central de Emergência e Saúde",
+        serv_t: "Serviços Técnicos (Lateral Norte)",
         serv_hub_t: "Central de Serviços:",
         serv_hub_d: "Na lateral norte do espaço encontram-se as linhas de serviço de cada vaga (energia 220V, água potável e pontos de descarte).",
         serv_elec_t: "Eletricidade 220V (10A)",
-        serv_elec_d: "Tomadas 220V/10A. Para consumos maiores ou ar-condicionado de alta potência, consulte a equipe previamente.",
+        serv_elec_d: "Tomadas 220V/10A. Para consumos maiores ou equipamentos de alta potência, consulte a equipe previamente.",
         serv_water_t: "Abastecimento de Água Doce",
         serv_water_d: "Torneira para encher tanques. Não é permitido deixar a mangueira conectada direto pela forte pressão da rede.",
         serv_waste_t: "Descarte de Efluentes (Cinzas e Negras)",
         serv_waste_d: "Pontos de descarga na lateral norte. O descarte com mangueira e potys é realizado preferencialmente à noite.",
         serv_bath_t: "Banheiros e Duchas de Praia",
-        serv_bath_d: "Duchas externas frias para tirar areia. Banheiros compartilhados para higiene pessoal. Importante: proibido lavar louça, panelas ou utensílios de cozinha nos banheiros.",
-        rules_t: "3. Convivência e Harmonia com os Vizinhos",
+        serv_bath_d: "Duchas frias externas para tirar areia. Banheiros compartilhados para higiene pessoal. Importante: proibido lavar louça, panelas ou utensílios de cozinha nos banheiros.",
+        rules_t: "Convivência e Harmonia com os Vizinhos",
         r_fire_t: "🔥 Churrasco e Fogo em Espaços Portáteis:",
-        r_fire_d: "Adoramos um bom churrasco! É permitido fazer fogo exclusivamente em churrasqueiras portáteis suspensas. Terminantemente proibido fazer fogo no chão ou gramado.",
+        r_fire_d: "Permitido fazer fogo exclusivamente em churrasqueiras portáteis suspensas. Terminantemente proibido fazer fogo no chão ou gramado.",
         r_quiet_t: "🔇 Silêncio e Descanso (22:00 às 08:00 hs):",
         r_quiet_d: "Fazemos divisa com os Lofts do Residencial. Pedimos evitar barulhos, som alto ou geradores elétricos neste horário.",
         r_speed_t: "🐢 Passo de Homem (5 km/h):",
-        r_speed_d: "Circule muito devagar. A prioridade absoluta é de pedestres, crianças de praia e animais de estimação.",
+        r_speed_d: "Circule muito devagar. A prioridade absoluta é de pedestres, crianças e animais de estimação.",
         r_awning_t: "⛺ Toldos, Mesas e Seu Espaço:",
         r_awning_d: "Abra seu toldo e cadeiras dentro da largura da sua vaga, garantindo a passagem dos outros veículos.",
         r_nature_t: "🌿 Cuidado com a Natureza e Lixo Noturno:",
         r_nature_d: "Estamos cercados por morros e vegetação nativa. Não deixe sacos de lixo no chão à noite para não atrair animais silvestres.",
         r_pets_t: "🐾 Pets Bem-Vindos e Responsáveis:",
         r_pets_d: "Mantenha sempre na coleira nas áreas comuns e recolha os dejetos imediatamente (lei ambiental de SC).",
-        mov_t: "4. Mobilidade na Ilha & Comércios Vizinhos",
-        bus_title: "Ônibus a 50 metros da porta",
-        bus_desc: "A 50 m você encontra o ponto de ônibus. A linha 1122 Executivo Praia Brava vai direto e com ar-condicionado ao centro de Floripa.",
-        uber_title: "Ubers Seguros & Parcerias Rental Ready",
-        uber_desc: "A região conta com ótima oferta de motoristas de aplicativo. Com a parceria Rental Ready, nossos hóspedes contam com prioridade no atendimento na alta temporada.",
-        mini_t: "🥩 Minimercado & Carnes Corujão",
-        mini_d: "Dentro do complexo: bebidas geladas, gelo, carvão, lenha e carnes para churrasco.",
-        rancho_t: "🦐 Rancho Do Pescador Lagoinha",
-        rancho_d: "A 1 minuto a pé na praia. 🏆 Melhor Restaurante de Frutos do Mar de Floripa.",
-        chk_t: "5. Checklist de Saída (Até as 11:00 hs)",
+        rec_t: "Recomendações do Anfitrião & Trilhas",
+        chk_t: "Checklist de Saída (Até as 11:00 hs)",
         r_water_drop_t: "⛔ Proibido Sair Pingando Água:",
         r_water_drop_d: "Por respeito aos pedestres e conservação do acesso, é estritamente proibido sair pingando água cinza ou negra pelo portão. Verifique a vedação antes de sair.",
         k1: "Desconectar cabo 220V e enrolar mangueiras",
         k2: "Conferir se a vaga ficou completamente limpa e sem lixo",
         k3: "Avisar a administração (Martín, María ou Marcos) na saída",
-        feedback_t: "Sua opinião é fundamental",
-        feedback_d: "Gostou da estadia ou tem alguma sugestão de melhoria? Deixe sua avaliação no Google ou envie uma sugestão 100% anônima.",
+        feedback_t: "Sua experiência na comunidade estradeira",
+        feedback_d: "Avalie nosso ponto de apoio ou envie uma sugestão 100% anônima.",
         btn_review: "Deixe sua Avaliação 5 Estrelas no Google",
+        btn_ioverlander: "Deixar Avaliação no iOverlander",
         btn_anon: "Enviar Sugestão Anônima aos Anfitriões",
+        social_t: "Conecte-se conosco",
         wa_prompt: "Precisa de suporte técnico ou quer combinar sua saída?",
         wa_btn: "Falar com a Administração",
         wa_msg: "Olá! Estou entrando em contato através do Concierge Digital do Park & Stay Corujão (Setor Motorhome)."
       },
       en: {
         badge_node: "Verified Park & Stay Node",
-        hero_t: "Welcome home, traveler! 🚐🌴",
+        hero_t: "Hello! I am your Digital Concierge! 🚐🌴",
         hero_s: "Park & Stay Corujão · Lagoinha do Norte · Florianópolis",
-        welcome_t: "Your safe haven by the beach",
-        welcome_d: "We want you to feel right at home while enjoying one of the cleanest and calmest beaches in Florianópolis. We are here to ensure your road-trip stay is easy and comfortable.",
+        welcome_t: "Your safe and connected beachfront base",
+        welcome_d: "We want you to feel right at home in Lagoinha do Norte. We are here to provide technical support, live local alerts, and full assistance during your stay.",
         wifi_t: "1. Free Wi-Fi Connection",
         wifi_ssid_l: "Wi-Fi Network:",
         wifi_pass_l: "Password:",
         wifi_btn: "Copy Password",
         wifi_copied: "Password copied: ",
+        work_badge: "Workation Certified · Workation Ready Badge",
+        work_cert: "Rental Ready Certification",
+        work_desc: "Network stability, latency, electrical supply, and basic remote work setup thoroughly verified. It does not promise extreme speeds, but a dependable and stable work experience.",
+        work_test: "Tested on 10/16/2026",
         weather_loading: "Loading live weather...",
-        beach_card_t: "Beach & Water Quality Info",
-        beach_card_s: "Lagoinha do Norte just a 1-minute walk",
-        beach_card_d: "Calm, clean, family-friendly waters. Check the official weekly bathing water report by IMA Santa Catarina:",
+        beach_card_t: "Coastal Alerts & Monitoring",
+        beach_card_s: "Daily Official Report",
+        boletin_t: "Daily Report:",
+        boletin_d: "Normal beach conditions. Water safe for swimming according to IMA report. Light breeze.",
         beach_btn: "Check Official IMA Beach Water Report",
-        serv_t: "2. Hookups & Utility Lines (North Side)",
+        emerg_t: "Emergency & Medical Numbers",
+        serv_t: "Hookups & Utility Lines (North Side)",
         serv_hub_t: "Utility Line Center:",
         serv_hub_d: "Along the northern edge of the lot, you will find all utility hookup points (electricity, fresh water, and sewer drops).",
         serv_elec_t: "Electricity 220V (10A)",
@@ -538,9 +635,9 @@
         serv_waste_d: "North side dump ports. RV hose draining and portable cassettes should be emptied at night when day-parking cars are gone.",
         serv_bath_t: "Restrooms & Cold Beach Showers",
         serv_bath_d: "Cold outdoor beach showers available. Shared restrooms are for personal hygiene only. Important: washing dishes, pots, or kitchenware inside the restrooms is strictly prohibited.",
-        rules_t: "3. House Rules & Good Neighbor Policy",
+        rules_t: "House Rules & Good Neighbor Policy",
         r_fire_t: "🔥 BBQ & Portable Fire Pits:",
-        r_fire_d: "We love camp BBQs! Fire is allowed exclusively in raised portable fire pits or your own grills. Ground fires on sand or grass are strictly forbidden.",
+        r_fire_d: "Fire is allowed exclusively in raised portable fire pits or your own grills. Ground fires on sand or grass are strictly forbidden.",
         r_quiet_t: "🔇 Quiet Hours (10:00 PM to 08:00 AM):",
         r_quiet_d: "We share borders with residential lofts and local families. Please keep noise down, no loud music or generators during these hours.",
         r_speed_t: "🐢 Walking Speed (5 km/h / 3 mph):",
@@ -551,25 +648,19 @@
         r_nature_d: "Surrounded by wildlife reserves. Do not leave trash bags on the ground overnight to prevent attracting animals. Use closed bins.",
         r_pets_t: "🐾 Happy & Responsible Pets:",
         r_pets_d: "Pets must remain on a leash in common areas. Immediate waste pickup is mandatory under Santa Catarina environmental law.",
-        mov_t: "4. Island Transit & Nearby Services",
-        bus_title: "Bus Stop 50 meters away",
-        bus_desc: "A bus stop is right outside (50m). Line 1122 Executivo Praia Brava takes you directly to downtown Florianópolis with A/C.",
-        uber_title: "Safe Ubers & Rental Ready Priority",
-        uber_desc: "Uber operates smoothly and affordably in this area. Through Rental Ready commercial agreements, our guests get ride dispatch priority during peak summer season.",
-        mini_t: "🥩 Minimarket & Butcher Shop Corujão",
-        mini_d: "Inside resort: cold drinks, ice, charcoal, firewood, and fresh barbecue cuts.",
-        rancho_t: "🦐 Rancho Do Pescador Restaurant",
-        rancho_d: "1 minute walk on the beach. 🏆 Best Seafood Restaurant in Floripa.",
-        chk_t: "5. Departure Checklist (By 11:00 AM)",
+        rec_t: "Host Recommendations & Hiking",
+        chk_t: "Departure Checklist (By 11:00 AM)",
         r_water_drop_t: "⛔ Absolutely No Dripping Water on Exit:",
         r_water_drop_d: "Out of respect for pedestrians and driveway upkeep, exiting while dripping grey or black water is strictly forbidden. Check all valve seals before departing.",
         k1: "Disconnect 220V power cord and roll up water hoses",
         k2: "Ensure vehicle bay is left spotless with zero trash",
         k3: "Check out with management (Martín, María, or Marcos)",
         feedback_t: "Your opinion matters to us",
-        feedback_d: "Enjoyed your stay or have ideas to improve? Leave us a public review or send us 100% anonymous feedback.",
+        feedback_d: "Rate our location or send us 100% anonymous feedback.",
         btn_review: "Leave a 5-Star Review on Google",
+        btn_ioverlander: "Leave a Review on iOverlander",
         btn_anon: "Send Anonymous Feedback to Hosts",
+        social_t: "Connect with us",
         wa_prompt: "Need technical assistance or checking out?",
         wa_btn: "Message Management",
         wa_msg: "Hello! I am contacting you from the Digital Concierge at Park & Stay Corujão (RV Section)."
@@ -614,13 +705,16 @@
       window.open("https://g.page/r/CewIf3rRIO05EAI/review", "_blank");
     }
 
+    function abrirIOverlander() {
+      window.open("https://ioverlander.com/places/525d4557-9640-4153-a994-114dd651fd15", "_blank");
+    }
+
     function abrirSugerencias() {
       const tel = "5492235678263";
       const msj = encodeURIComponent("📝 Sugerencia anónima / Comentario constructivo para Park & Stay Corujão:\n\n");
       window.open("https://api.whatsapp.com/send?phone=" + tel + "&text=" + msj, "_blank");
     }
 
-    // Fallback por si la imagen tiene otra extensión
     function handleImgError(img) {
       if (!img.dataset.triedJpg2) {
         img.dataset.triedJpg2 = "true";
@@ -633,7 +727,6 @@
       }
     }
 
-    // Clima en vivo en Praia da Lagoinha
     async function fetchWeather() {
       try {
         const res = await fetch("[suspicious link removed]");
