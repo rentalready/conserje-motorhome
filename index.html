@@ -292,7 +292,7 @@
         <div class="mb-3">
           <h6 class="fw-bold small mb-1"><i class="bi bi-car-front-fill text-success"></i> <span data-i18n="uber_title">Ubers Seguros & Alianzas Rental Ready</span></h6>
           <p class="small text-muted mb-0" data-i18n="uber_desc">
-            La zona cuenta con excelente cobertura de Uber económico y seguro. Además, gracias a las <strong>alianzas comerciales de Rental Ready</strong>, nuestros huéspedes cuentan con prioridad en la asignación de viajes durante temporada alta.
+            La zona cuenta con excelente cobertura de Uber económico y seguro. Además, gracias a las <strong>alianzas comerciales de Rental Ready</strong>, nuestros huéspedes cuentan con preferencia en la asignación de viajes durante temporada alta.
           </p>
         </div>
         <hr class="my-2">
@@ -611,22 +611,23 @@
     }
 
     function abrirResenas() {
-      window.open("[suspicious link removed]", "_blank");
+      window.open("https://g.page/r/CewIf3rRIO05EAI/review", "_blank");
     }
 
     function abrirSugerencias() {
+      const tel = "5492235678263";
       const msj = encodeURIComponent("📝 Sugerencia anónima / Comentario constructivo para Park & Stay Corujão:\n\n");
-      window.open("[suspicious link removed]" + msj, "_blank");
+      window.open("https://api.whatsapp.com/send?phone=" + tel + "&text=" + msj, "_blank");
     }
 
-    // Fallback inteligente para la imagen
+    // Fallback por si la imagen tiene otra extensión
     function handleImgError(img) {
-      if (!img.dataset.triedPng) {
-        img.dataset.triedPng = "true";
-        img.src = "conserje-bg.png";
-      } else if (!img.dataset.triedJpg2) {
+      if (!img.dataset.triedJpg2) {
         img.dataset.triedJpg2 = "true";
-        img.src = "badsn.jpg";
+        img.src = "conserje-bg.jpg";
+      } else if (!img.dataset.triedPng) {
+        img.dataset.triedPng = "true";
+        img.src = "conserje-motorhome.png";
       } else {
         img.style.display = "none";
       }
